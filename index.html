@@ -5,79 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Digital Boundaries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
-    <style>
-        /* Custom styles */
-        .loading {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            color: #000;
-        }
-    </style>
-    <script>
-        function initMap() {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: -30.05, lng: 30.80 },
-                zoom: 12,
-                mapTypeControl: true,
-                mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                    position: google.maps.ControlPosition.TOP_RIGHT
-                }
-            });
-
-            const drawingManager = new google.maps.drawing.DrawingManager({
-                drawingMode: google.maps.drawing.OverlayType.POLYGON,
-                drawingControl: true,
-                drawingControlOptions: {
-                    position: google.maps.ControlPosition.TOP_CENTER,
-                    drawingModes: ['polygon']
-                },
-                polygonOptions: {
-                    strokeColor: "#FF0000",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: "#FF0000",
-                    fillOpacity: 0.35,
-                    editable: true,
-                    draggable: true
-                }
-            });
-            drawingManager.setMap(map);
-
-            // Toggleable Layers
-            const trafficLayer = new google.maps.TrafficLayer();
-            const toggleTraffic = document.getElementById("toggle-traffic");
-            toggleTraffic.addEventListener("click", () => {
-                trafficLayer.setMap(trafficLayer.getMap() ? null : map);
-            });
-
-            // Hide loading indicator when map is loaded
-            google.maps.event.addListenerOnce(map, 'idle', () => {
-                const loadingIndicator = document.getElementById("loading-indicator");
-                loadingIndicator.style.display = "none";
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const loadingIndicator = document.getElementById("loading-indicator");
-            loadingIndicator.style.display = "block";
-        });
-    </script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAJBKHAL3zul4P5L-_CZo8GCpYYGN9y48&libraries=drawing&callback=initMap"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/scripts.js" defer></script>
 </head>
 <body class="bg-gray-100">
     <header class="bg-blue-600 text-white text-center py-6">
-        <h1 class="text-3xl font-bold">Umnini Digital Boundaries Prototype</h1>
+        <h1 class="text-3xl font-bold">Local Digital Boundaries</h1>
         <p class="mt-2">Digitize and manage home boundaries online.</p>
+        <nav class="mt-4">
+            <a href="#overview" class="mx-2">Overview</a>
+            <a href="#map" class="mx-2">Map</a>
+            <a href="#profile" class="mx-2">Profile</a>
+            <a href="#search" class="mx-2">Search</a>
+            <a href="#upload" class="mx-2">Upload</a>
+        </nav>
     </header>
 
-    <section class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-xl font-semibold mb-4">How It Works</h2>
-        <ul class="list-disc ml-6">
+    <section id="overview" class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">Overview</h2>
+        <p class="mb-4">Umnini Digital Boundaries is a system designed to digitize home boundaries and manage them online. The system is structured into three hierarchical levels: Izizwe (Tribes/Nations), Izigodi (Regions/Wards), and Imizi (Homes/Households).</p>
+        <ul class="list-disc ml-6 mb-4">
             <li>Interactive map for marking property boundaries.</li>
             <li>Secure portal for homeowners to register and verify land ownership.</li>
             <li>GPS tracking and document uploads for property validation.</li>
@@ -86,16 +33,47 @@
         </ul>
     </section>
 
-    <section class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-xl font-semibold mb-4">Live Map Preview</h2>
-        <div id="map" class="w-full h-96 relative">
+    <section id="map" class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">Interactive Map</h2>
+        <div id="map-container" class="w-full h-96 relative">
             <div id="loading-indicator" class="loading">Loading...</div>
         </div>
         <button id="toggle-traffic" class="mt-4 bg-blue-600 text-white py-2 px-4 rounded">Toggle Traffic Layer</button>
     </section>
 
+    <section id="profile" class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">User Profiles</h2>
+        <p class="mb-4">Manage profiles for different user roles such as Inkosi (Chief), Induna (Headman), and Homeowner. Each role has specific access permissions and functionalities.</p>
+        <ul class="list-disc ml-6 mb-4">
+            <li><strong>Inkosi Profile</strong> – Manage Izizwe and see all Izigodi and Imizi under them.</li>
+            <li><strong>Induna Profile</strong> – Manage a specific Isigodi and see all Imizi under it.</li>
+            <li><strong>Homeowner Profile</strong> – Access their own Imizi boundary and basic Isigodi info.</li>
+        </ul>
+    </section>
+
+    <section id="search" class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">Search and Update Requests</h2>
+        <p class="mb-4">Users can search for their land by name, ID, or coordinates. If a boundary is incorrect, they can submit a request for updates.</p>
+        <form id="search-form" class="mb-4">
+            <input type="text" id="search-input" class="border rounded p-2 w-full" placeholder="Search by name, ID, or coordinates">
+            <button type="submit" class="mt-2 bg-blue-600 text-white py-2 px-4 rounded">Search</button>
+        </form>
+        <div id="search-results" class="mt-4"></div>
+    </section>
+
+    <section id="upload" class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">Upload Legal Documentation</h2>
+        <p class="mb-4">Users and leaders can upload documents to verify land ownership. This ensures that all land boundaries are legally recognized.</p>
+        <form id="upload-form" class="mb-4">
+            <input type="file" id="upload-input" class="border rounded p-2 w-full">
+            <button type="submit" class="mt-2 bg-blue-600 text-white py-2 px-4 rounded">Upload</button>
+        </form>
+    </section>
+
     <footer class="bg-blue-600 text-white text-center py-4 mt-6">
         <p>&copy; 2025 Umnini Community Trust | All Rights Reserved</p>
+        <p>Current Date and Time (UTC): 2025-02-16 11:32:27</p>
+        <p>User's Login: SMT2501</p>
     </footer>
 </body>
 </html>
