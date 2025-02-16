@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umnini Digital Boundaries</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAJBKHAL3zul4P5L-_CZo8GCpYYGN9y48&callback=initMap" defer></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -30.05, lng: 30.80 },
+                zoom: 12,
+            });
+
+            const locations = [
+                { lat: -30.083, lng: 30.860, title: "Winklespruit" },
+                { lat: -30.100, lng: 30.850, title: "Umgababa" },
+                { lat: -30.110, lng: 30.830, title: "Magabeni" },
+                { lat: -30.160, lng: 30.780, title: "Umkomaas" }
+            ];
+
+            locations.forEach(location => {
+                new google.maps.marker.AdvancedMarkerElement({
+                    position: { lat: location.lat, lng: location.lng },
+                    map,
+                    title: location.title,
+                });
+            });
+        }
+    </script>
+
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white text-center py-6">
+        <h1 class="text-3xl font-bold">Umnini Digital Boundaries</h1>
+        <p class="mt-2">A system to digitize and manage home boundaries online.</p>
+    </header>
+
+    <section class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">How It Works</h2>
+        <ul class="list-disc ml-6">
+            <li>Interactive map for marking property boundaries.</li>
+            <li>Secure portal for homeowners to register and verify land ownership.</li>
+            <li>GPS tracking and document uploads for property validation.</li>
+            <li>Mobile-friendly interface for easy access and updates.</li>
+            <li>Future plans for AI-based land mapping and blockchain security.</li>
+        </ul>
+    </section>
+
+    <section class="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">Live Map Preview</h2>
+        <div id="map" class="w-full h-96"></div>
+    </section>
+
+    <footer class="bg-blue-600 text-white text-center py-4 mt-6">
+        <p>&copy; 2025 Umnini Community Trust | All Rights Reserved</p>
+    </footer>
+</body>
+</html>
